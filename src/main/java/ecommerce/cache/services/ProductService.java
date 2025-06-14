@@ -2,6 +2,7 @@ package ecommerce.cache.services;
 
 import ecommerce.cache.DTOS.ProductDTO;
 import ecommerce.cache.entitys.ProductsEntity;
+import ecommerce.cache.entitys.UserEntity;
 import ecommerce.cache.repositories.ProductsRepositories;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,8 +24,10 @@ public class ProductService {
         newproduct.setPrice(productDTO.getPrice());
         newproduct.setPopular(productDTO.isPopular());
         newproduct.setStock(productDTO.getStock());
+        newproduct.addOnStock(productDTO.getStock());
 
         ProductsEntity savedProduct = productsRepositories.save(newproduct);
+
 
         return ResponseEntity.status(HttpStatus.CREATED).body(savedProduct);
 
