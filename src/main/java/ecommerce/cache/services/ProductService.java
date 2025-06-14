@@ -6,11 +6,13 @@ import ecommerce.cache.repositories.ProductsRepositories;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-public class ProctService {
+import java.util.List;
+
+public class ProductService {
 
    private final ProductsRepositories productsRepositories;
 
-    public ProctService(ProductsRepositories productsRepositories) {
+    public ProductService(ProductsRepositories productsRepositories) {
         this.productsRepositories = productsRepositories;
     }
 
@@ -26,6 +28,10 @@ public class ProctService {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(savedProduct);
 
+    }
+
+    public List<ProductsEntity> ListAllProducts(){
+        return productsRepositories.findAll();
     }
 
 }
