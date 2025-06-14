@@ -1,10 +1,11 @@
 package ecommerce.cache.entitys;
 
+import ecommerce.cache.DTOS.UserDTO;
 import ecommerce.cache.repositories.ProductsRepositories;
 import jakarta.persistence.*;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Entity
@@ -16,22 +17,52 @@ public class UserEntity {
 
     private String name;
 
+    @Column(unique = true)
     private String email;
 
     private List<ProductsEntity> orders;
 
-    private final ProductsEntity productsEntity;
-    private final ProductsRepositories productsRepositories;
 
-    public UserEntity(ProductsEntity productsEntity, ProductsRepositories productsRepositories) {
-        this.productsEntity = productsEntity;
-        this.productsRepositories = productsRepositories;
+
+    public UserEntity(String name, String email, List<ProductsEntity> orders) {
+        this.name = name;
+        this.email = email;
+        this.orders = orders;
+
     }
 
-    public void addOrder(UUID idProduct) {
-        ProductsEntity wanted = productsRepositories.findById(idProduct)
-                .orElseThrow(() -> new RuntimeException("Produto não encontrado com id: " + idProduct));
+    public UserEntity() {
+    }
 
-        this.orders.add(wanted);
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public List<ProductsEntity> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<ProductsEntity> orders) {
+        this.orders = orders;
     }
 }

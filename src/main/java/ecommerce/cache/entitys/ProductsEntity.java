@@ -1,5 +1,6 @@
 package ecommerce.cache.entitys;
 
+import ecommerce.cache.DTOS.ProductDTO;
 import ecommerce.cache.enums.Categorie;
 import jakarta.persistence.*;
 
@@ -22,6 +23,49 @@ public class ProductsEntity {
     private Integer stock;
 
     private boolean popular;
+
+    public ProductsEntity() {
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public Categorie getCategorie() {
+        return categorie;
+    }
+
+    public void setCategorie(Categorie categorie) {
+        this.categorie = categorie;
+    }
+
+    public Integer getStock() {
+        return stock;
+    }
+
+    public void setStock(Integer stock) {
+        this.stock = stock;
+    }
+
+    public boolean isPopular() {
+        return popular;
+    }
+
+    public void setPopular(boolean popular) {
+        this.popular = popular;
+    }
 
     public void addOnStock(int quantity) {
         if (quantity < 0) throw new IllegalArgumentException("this amount doesn't make sense");
