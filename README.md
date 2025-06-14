@@ -82,6 +82,21 @@ Implement caching for frequently accessed data
 Conclusion
 This project served as an excellent learning experience in handling complex database relationships in a Spring Boot application. It demonstrates practical solutions to common challenges in building e-commerce backends, such as managing circular dependencies and implementing many-to-many relationships.
 
-```
+## Feature: Caching Popular Products with Redis
 
-```
+To improve the performance and responsiveness of the application, I implemented a caching layer for popular products using Redis. This feature reduces the number of database queries by storing frequently accessed product data in the Redis cache.
+
+### How It Works
+
+- When a request for popular products is made, the application first checks the Redis cache.
+- If the data is available in the cache, it is returned immediately, significantly reducing response time.
+- If the data is not in the cache, the application queries the database, stores the result in Redis, and then returns the data.
+- The cache is periodically refreshed or invalidated to ensure data consistency.
+
+### Benefits
+
+- Reduced database load and faster API responses
+- Improved scalability for handling high traffic
+- Demonstrates integration of Redis with Spring Boot for effective caching
+
+This caching feature is a key optimization for enhancing user experience when browsing popular products.
