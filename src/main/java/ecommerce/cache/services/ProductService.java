@@ -21,7 +21,7 @@ public class ProductService {
     public ProductService(ProductsRepositories productsRepositories) {
         this.productsRepositories = productsRepositories;
     }
-    
+
     public ResponseEntity<ProductsEntity> createdProduct(ProductDTO productDTO){
         ProductsEntity newproduct = new ProductsEntity();
 
