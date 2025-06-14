@@ -3,11 +3,10 @@ package ecommerce.cache.controller;
 import ecommerce.cache.DTOS.OrderDto;
 import ecommerce.cache.entitys.OrderEntity;
 import ecommerce.cache.services.OrderService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,13 +19,13 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    @GetMapping
+    @GetMapping("/")
     public List<OrderEntity> getAllOrders(){
         return orderService.ListAllOrders();
     }
 
-    @PostMapping
-    public ResponseEntity<OrderEntity> createOrder(OrderDto orderDto){
+    @PostMapping("/")
+    public ResponseEntity<OrderEntity> createOrder(@RequestBody @Valid OrderDto orderDto){
         return orderService.createOrder(orderDto);
     }
 }

@@ -1,5 +1,6 @@
 package ecommerce.cache.entitys;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import ecommerce.cache.DTOS.UserDTO;
 import ecommerce.cache.repositories.ProductsRepositories;
 import jakarta.persistence.*;
@@ -26,6 +27,7 @@ public class UserEntity {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id")
     )
+    @JsonBackReference
     private List<ProductsEntity> orders;
 
 

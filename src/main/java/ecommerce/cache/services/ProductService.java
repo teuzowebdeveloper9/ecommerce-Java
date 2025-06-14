@@ -18,6 +18,11 @@ public class ProductService {
         this.productsRepositories = productsRepositories;
     }
 
+
+
+
+
+
     public ResponseEntity<ProductsEntity> createdProduct(ProductDTO productDTO){
         ProductsEntity newproduct = new ProductsEntity();
 
@@ -38,6 +43,8 @@ public class ProductService {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedProduct);
 
     }
+
+
 
     public List<ProductsEntity> ListAllProducts(){
         return productsRepositories.findAll();

@@ -4,11 +4,9 @@ package ecommerce.cache.controller;
 import ecommerce.cache.DTOS.UserDTO;
 import ecommerce.cache.entitys.UserEntity;
 import ecommerce.cache.services.UserService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.processing.Generated;
 import java.util.List;
@@ -29,7 +27,7 @@ public class UserController {
     }
 
     @PostMapping("/")
-    ResponseEntity<UserEntity> createUsers(UserDTO userDTO){
+    ResponseEntity<UserEntity> createUsers(@RequestBody @Valid UserDTO userDTO){
         return userService.createUser(userDTO);
     }
 }

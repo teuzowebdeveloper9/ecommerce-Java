@@ -1,6 +1,6 @@
 package ecommerce.cache.entitys;
 
-import ecommerce.cache.DTOS.ProductDTO;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import ecommerce.cache.enums.Categorie;
 import jakarta.persistence.*;
 
@@ -27,6 +27,7 @@ public class ProductsEntity {
     private boolean popular;
 
     @ManyToMany(mappedBy = "orders")
+    @JsonManagedReference
     private List<UserEntity> buyers = new ArrayList<>();
 
     public List<UserEntity> getBuyers() {

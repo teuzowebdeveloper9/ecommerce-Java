@@ -3,11 +3,9 @@ package ecommerce.cache.controller;
 import ecommerce.cache.DTOS.ProductDTO;
 import ecommerce.cache.entitys.ProductsEntity;
 import ecommerce.cache.services.ProductService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,7 +24,7 @@ public class productsController {
     }
 
     @PostMapping("/")
-    ResponseEntity<ProductsEntity> createProduct(ProductDTO productDTO){
+    ResponseEntity<ProductsEntity> createProduct(@RequestBody @Valid ProductDTO productDTO){
         return productService.createdProduct(productDTO);
     }
 }
