@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class OrderService {
 
@@ -22,6 +24,10 @@ public class OrderService {
         this.userRepository = userRepository;
         this.productsRepositories = productsRepositories;
         this.orderReposiories = orderReposiories;
+    }
+
+    public List<OrderEntity> ListAllOrders(){
+        return orderReposiories.findAll();
     }
 
     public ResponseEntity<OrderEntity> createOrder(OrderDto orderDto){
