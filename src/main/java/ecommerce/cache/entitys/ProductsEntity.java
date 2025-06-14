@@ -1,0 +1,53 @@
+package ecommerce.cache.entitys;
+
+import ecommerce.cache.enums.Categorie;
+import jakarta.persistence.*;
+
+import java.math.BigDecimal;
+import java.util.UUID;
+
+@Entity
+@Table(name = "products")
+public class ProductsEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
+
+    private BigDecimal price;
+
+    @Enumerated(EnumType.STRING)
+    private Categorie categorie;
+
+    private Integer stock;
+
+    private boolean popular;
+
+    public void addOnStock(int quantity) {
+        if (quantity < 0) throw new IllegalArgumentException("this amount doesn't make sense");
+        this.stock += quantity;
+    }
+
+    public void removeOnStock(int quantity){
+        if(quantity > this.stock) throw  new IllegalArgumentException("you cannot remove more than stock");
+        this.stock -= quantity;
+    }
+
+    public void ApplyDiscount(BigDecimal discount){
+        BigDecimal half = this.price.multiply(BigDecimal.valueOf(0.5));
+        if(discount.compareTo(half) > 0){
+            throw  new IllegalArgumentException("this discount exceeds 50% of the product " + id);
+        }
+
+        this.price = this.price.subtract(discount);
+    }
+
+    public void brandPopular (){
+        this.popular = true;
+    }
+
+    public void RemovePopular (){
+        this.popular = false;
+    }
+
+}

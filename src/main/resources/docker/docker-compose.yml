@@ -1,0 +1,16 @@
+services:
+  db:
+    image: postgres:15
+    container_name: ecommerce
+    restart: always
+    environment:
+      POSTGRES_DB: ecommerce
+      POSTGRES_USER: teuzo
+      POSTGRES_PASSWORD: ecommerce
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  db_data:
