@@ -3,11 +3,15 @@ package ecommerce.cache.services;
 import ecommerce.cache.DTOS.ProductDTO;
 import ecommerce.cache.entitys.ProductsEntity;
 import ecommerce.cache.repositories.ProductsRepositories;
+import jakarta.persistence.Cacheable;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ProductService {
@@ -17,12 +21,7 @@ public class ProductService {
     public ProductService(ProductsRepositories productsRepositories) {
         this.productsRepositories = productsRepositories;
     }
-
-
-
-
-
-
+    
     public ResponseEntity<ProductsEntity> createdProduct(ProductDTO productDTO){
         ProductsEntity newproduct = new ProductsEntity();
 
@@ -48,6 +47,22 @@ public class ProductService {
 
     public List<ProductsEntity> ListAllProducts(){
         return productsRepositories.findAll();
+    }
+
+
+
+    @Caching
+    public List<ProductsEntity> getPopularProducts() {
+        return productsRepositories.findByPopularTrue();
+    }
+
+    @CacheEvict(value = "popular-products", allEntries = true)
+    public void updateProductPopularity(UUID id, boolean isPopular) {
+        ProductsEntity product = productsRepositories.findById(id)
+                .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+
+        product.setPopular(isPopular);
+        productsRepositories.save(product);
     }
 
 }
