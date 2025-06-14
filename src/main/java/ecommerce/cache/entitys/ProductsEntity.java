@@ -29,6 +29,14 @@ public class ProductsEntity {
     @ManyToMany(mappedBy = "orders")
     private List<UserEntity> buyers = new ArrayList<>();
 
+    public List<UserEntity> getBuyers() {
+        return buyers;
+    }
+
+    public void setBuyers(List<UserEntity> buyers) {
+        this.buyers = buyers;
+    }
+
     public ProductsEntity() {
     }
 
