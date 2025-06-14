@@ -5,6 +5,8 @@ import ecommerce.cache.enums.Categorie;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -23,6 +25,9 @@ public class ProductsEntity {
     private Integer stock;
 
     private boolean popular;
+
+    @ManyToMany(mappedBy = "orders")
+    private List<UserEntity> buyers = new ArrayList<>();
 
     public ProductsEntity() {
     }

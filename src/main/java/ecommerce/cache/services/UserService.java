@@ -4,6 +4,7 @@ import ecommerce.cache.DTOS.UserDTO;
 import ecommerce.cache.entitys.ProductsEntity;
 import ecommerce.cache.entitys.UserEntity;
 import ecommerce.cache.repositories.ProductsRepositories;
+import ecommerce.cache.repositories.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -16,20 +17,21 @@ import java.util.UUID;
 public class UserService {
 
     private final ProductsRepositories productsRepositories;
-    private final UserEntity userEntity;
+    private final UserRepository userRepository;
 
-    public UserService(ProductsRepositories productsRepositories, UserEntity userEntity) {
+    public UserService(ProductsRepositories productsRepositories, UserRepository userRepository) {
         this.productsRepositories = productsRepositories;
-        this.userEntity = userEntity;
+        this.userRepository = userRepository;
     }
+    public void addOrder(UUID userId, UUID idProduct) {
+        ProductsEntity wanted = productsRepositories.findById(idProduct)
+                .orElseThrow(() -> new IllegalArgumentException("Produto não encontrado"));
 
-    public void addOrder(UUID idProduct){
-        Optional<ProductsEntity> wanted = productsRepositories.findById(idProduct);
-        if(wanted.isEmpty()){
-            throw new  IllegalArgumentException("this product don't exist");
-        }
+        UserEntity user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado"));
 
-        userEntity.getOrders().add(wanted.get());
+        user.getOrders().add(wanted);
+        userRepository.save(user);
     }
 
     public ResponseEntity<UserEntity> createUser(UserDTO userDTO){
@@ -39,7 +41,8 @@ public class UserService {
         newUser.setName(userDTO.getName());
         newUser.setOrders(userDTO.getOrders());
 
-        return  ResponseEntity.status(HttpStatus.CREATED).body(newUser);
+        UserEntity savedUser = userRepository.save(newUser);
+        return  ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
 
     }
 

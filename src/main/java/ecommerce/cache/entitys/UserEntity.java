@@ -20,6 +20,12 @@ public class UserEntity {
     @Column(unique = true)
     private String email;
 
+    @ManyToMany
+    @JoinTable(
+            name = "users_orders",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id")
+    )
     private List<ProductsEntity> orders;
 
 
